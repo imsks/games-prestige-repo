@@ -1,0 +1,140 @@
+body {
+  background: #fff5ec;
+}
+
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .downloadBtn {
+    margin: 20px 0;
+  }
+}
+
+@media only screen and (min-width: 480px) {
+  .youtubeVideo {
+    margin-top: 10px;
+  }
+}
+
+.logo {
+  width: 57px;
+  padding-right: 14px;
+  position: relative;
+  top: 10px;
+}
+
+.url {
+  color: #000;
+  font-size: 16px;
+}
+
+.wrapper {
+  font-size: 30px;
+  padding: 30px 0px;
+  margin: 20px 0 40px 0;
+  background-color: #d0362d;
+  color: #fff;
+}
+
+.input-label {
+  font-size: 16px;
+}
+
+.downloadBtn {
+  margin-top: 20px;
+  background-color: #d0362d;
+  display: inline-block;
+}
+
+form {
+  color: black;
+}
+
+label:focus {
+  color: black;
+}
+
+.loading {
+  color: black;
+}
+
+select {
+  display: block;
+  width: 164px;
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
+
+.downloadContainer {
+  color: red;
+  display: flex;
+  font-size: 19px;
+}
+
+.formatLabel {
+  font-size: 16px;
+  color: black;
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.downLoad {
+  font-size: 16px;
+  margin-top: 24px;
+  color: black;
+}
+
+.formatQuality {
+  margin-top: 20px;
+}
+
+.input-field {
+  display: block;
+}
+
+.formatQuality select {
+  display: inline-block !important;
+}
+
+.error {
+  color: red;
+}
+
+.size {
+  color: black;
+}
+
+.helper-text {
+  color: #2ecc71;
+  font-size: 14px;
+}
+
+.videolinkholder {
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 40px;
+  margin-bottom: 10px;
+}
+
+.no-video-display {
+  color: green;
+  border: 1px solid #eaeaea;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.centerItem {
+  display: flex;
+  justify-content: center;
+}
+
+.success {
+  color: green;
+}
