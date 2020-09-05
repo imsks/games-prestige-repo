@@ -3,10 +3,8 @@ import axios from "axios";
 import RenderYoutube from "../components/Youtube";
 import ProgressComponent from "../components/ReactProgress";
 import Header from "../components/Header";
-import Select from "../components/Select";
 import { youtubeLink, socket, baseURL } from "../config";
 import { nullifyLocalStorageData, setLocalStorageData } from "../utils";
-import socketIOClient from "socket.io-client";
 
 const YoutubeDownloader = () => {
   const [link, setLink] = useState("");
@@ -23,7 +21,6 @@ const YoutubeDownloader = () => {
   const [percentage, setPercentage] = useState(0);
   const [requesting, setRequesting] = useState(false);
   const [formats, setFormats] = useState([]);
-  const [selectedQuality, setSelectedQuality] = useState("");
 
   const setInitialDataIfProgress = () => {
     const url = localStorage.getItem("url");
@@ -44,7 +41,6 @@ const YoutubeDownloader = () => {
       axios
         .post("http://localhost:5050/available-formats", { link })
         .then((response) => {
-          console.log(response.data.availableFormats);
           setFormats(response.data.availableFormats);
         });
     } else {
@@ -53,7 +49,6 @@ const YoutubeDownloader = () => {
   }, [link]);
 
   socket.on("downloadStatus", (data) => {
-    // console.log(data);
     setPercentage(parseInt((data.downloaded / data.total) * 100));
     setSize(parseInt(data.total));
     if (requesting) {
@@ -68,7 +63,7 @@ const YoutubeDownloader = () => {
     if (data.percentage > percentage) {
       setPercentage(data.percentage);
     }
-    if (data.percentage > 100) {
+    if (data.downloaded === data.total) {
       socket.disconnect();
     }
   });
@@ -123,28 +118,17 @@ const YoutubeDownloader = () => {
     basicReset();
   };
 
-  const selectChange = (e) => {
-    // debugger;
-    let data = formats[parseInt(e.target.value)];
-    setQuality(data);
-    basicReset();
-  };
-
   const handleSelectOption = (e) => {
-    // setSelectedQuality(
-    //   document.getElementById("selectedQuality").selectedOptions[0].value
-    // );
-    console.log(JSON.parse(document.getElementById("selectedQuality").selectedOptions[0].value))
-    setQuality(JSON.parse(document.getElementById("selectedQuality").selectedOptions[0].value));
-    // basicReset();
+    setQuality(
+      JSON.parse(
+        document.getElementById("selectedQuality").selectedOptions[0].value
+      )
+    );
   };
 
   const downloadVideo = (e) => {
     e.preventDefault();
-    console.log("working");
-
     if (youtubeLink.test(link)) {
-      console.log(link, quality)
       const payload = { link, quality };
       setLocalStorageData({ url: link, ql: quality });
       setRequesting(true);
@@ -154,13 +138,6 @@ const YoutubeDownloader = () => {
         .then(({ data }) => {
           nullifyLocalStorageData();
           setdisabled(false);
-          // if (data.error) {
-          //   console.log("data error", data.error);
-          //   setError(data.error);
-          //   setRequesting(false);
-          //   return;
-          // }
-          // console.log(data);
           setData(data.message);
           setError(null);
         })
@@ -178,8 +155,6 @@ const YoutubeDownloader = () => {
     }
   };
 
-  // console.log(size);
-
   return (
     <>
       <Header />
@@ -195,20 +170,24 @@ const YoutubeDownloader = () => {
                 onChange={inputHandle}
                 placeholder="Enter Your URL"
               />
-              {/* <Select
-                selectChange={selectChange}
-                quality={quality}
-                disabled={disabled}
-                formats={formats}
-                link={link}
-              /> */}
 
-              <select onChange={handleSelectOption} id="selectedQuality">
+              <label className="formatLabel">Video Quality</label>
+              <select
+                onChange={handleSelectOption}
+                id="selectedQuality"
+                className="input-field"
+              >
+                <option key="" value="">
+                  Auto
+                </option>
                 {formats && formats.length > 0 ? (
                   <>
-                    <option>Auto</option>
-                    {formats.map((el) => {
-                      return <option value={JSON.stringify(el)}>{el.qualityLabel}</option>;
+                    {formats.map((el, key) => {
+                      return (
+                        <option value={JSON.stringify(el)} key={key}>
+                          {el.qualityLabel}
+                        </option>
+                      );
                     })}
                   </>
                 ) : (

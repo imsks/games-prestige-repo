@@ -29,25 +29,7 @@ io.on("connection", (socket) => {
     console.log("here");
   });
 
-  // socket.on("error", (err) => {
-  //   console.log("here", err, "hereeeeeeeepipieee");
-  // });
-
-  // socket.on("connect_error", function (err) {
-  //   console.log(err);
-  // });
-
-  // getApiAndEmit(socket);
-
   socket.on("disconnect", function (socket) {
     console.log("here disconnet");
   });
 });
-
-// const getApiAndEmit = async (socket) => {
-//   const response = "workind";
-//   const temp = ytCOntroller.downloads;
-//   console.log(temp)
-//   // Emitting a new message. Will be consumed by the client
-//   // socket.emit("FromAPI", response);
-// };
